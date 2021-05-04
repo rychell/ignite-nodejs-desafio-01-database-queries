@@ -32,6 +32,6 @@ export class UsersRepository implements IUsersRepository {
     last_name,
   }: IFindUserByFullNameDTO): Promise<User[] | undefined> {
 
-    return this.repository.query(`SELECT * FROM users WHERE first_name=INITCAP($1) AND last_name=INITCAP($2)`, [first_name.toLowerCase(), last_name.toLowerCase()]); // Complete usando raw query
+    return this.repository.query(`SELECT * FROM users WHERE first_name ILIKE $1 AND last_name ILIKE $2`, [`%${first_name}%`, `%${last_name}%`]); // Complete usando raw query
   }
 }
